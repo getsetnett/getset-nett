@@ -141,15 +141,13 @@ h3 {
     left: 0;
     right: 0;
     z-index: 1000;
-    background: rgba(26, 26, 26, 0.1);
-    backdrop-filter: blur(10px);
+    background: #1A1A1A;
     transition: all 0.4s ease;
     padding: 1rem 0;
 }
 
 .header.scrolled {
-    background: rgba(26, 26, 26, 0.95);
-    backdrop-filter: blur(20px);
+    background: #1A1A1A;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
@@ -157,6 +155,31 @@ h3 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.header-actions {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.header-phone {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #FFFFFF;
+}
+
+.header-phone-number {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.header-phone-number:hover {
+    color: #6366F1;
 }
 
 .logo {
@@ -1451,9 +1474,52 @@ section {
 /* Live Chat Widget */
 .live-chat-widget {
     position: fixed;
-    bottom: 20px;
+    bottom: 100px;
     right: 20px;
     z-index: 1000;
+}
+
+.sticky-call-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+}
+
+.call-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #10B981, #059669);
+    border: none;
+    border-radius: 50%;
+    color: #FFFFFF;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+    transition: all 0.3s ease;
+    gap: 3px;
+}
+
+.call-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(16, 185, 129, 0.6);
+}
+
+.call-tooltip {
+    font-size: 0.65rem;
+    font-weight: 500;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.call-btn:hover .call-tooltip {
+    display: block;
+    opacity: 1;
 }
 
 .chat-toggle {
@@ -1700,6 +1766,10 @@ section {
 @media (max-width: 768px) {
     .mobile-menu-toggle {
         display: flex;
+    }
+    
+    .header-phone {
+        display: none;
     }
     
     .nav {

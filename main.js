@@ -2,19 +2,7 @@
 const header = document.getElementById('header');
 const mobileMenuToggle = document.getElementById('mobileMenuToggle');
 const nav = document.getElementById('nav');
-const availabilityForm = document.getElementById('availabilityForm');
-const zipCodeInput = document.getElementById('zipCode');
-const zipError = document.getElementById('zipError');
-const coverageAreas = document.querySelectorAll('.coverage-area');
-const mapTooltip = document.getElementById('mapTooltip');
-const plansGrid = document.getElementById('plansGrid');
 const faqItems = document.querySelectorAll('.faq-item');
-const speedTestButton = document.getElementById('startSpeedTest');
-const speedValue = document.getElementById('speedValue');
-const speedNeedle = document.getElementById('speedNeedle');
-const downloadSpeed = document.getElementById('downloadSpeed');
-const uploadSpeed = document.getElementById('uploadSpeed');
-const pingSpeed = document.getElementById('pingSpeed');
 const testimonialCards = document.querySelectorAll('.testimonial-card');
 const contactForm = document.getElementById('contactForm');
 const liveChatWidget = document.getElementById('liveChatWidget');
@@ -25,22 +13,16 @@ const chatInput = document.getElementById('chatInput');
 // Global Variables
 let currentTestimonial = 0;
 let testimonialInterval;
-let isSpeedTesting = false;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
     initializeHeader();
-    initializeAvailabilityChecker();
-    initializeCoverageMap();
-    initializePlanComparison();
     initializeFAQ();
-    initializeSpeedTest();
     initializeTestimonials();
     initializeContactForm();
     initializeLazyLoading();
     initializeScrollAnimations();
     initializeLiveChat();
-    initializePartnersSlider();
     initializeAOS();
 });
 
@@ -68,215 +50,6 @@ function initializeHeader() {
     });
 }
 
-// Availability Checker Functions
-function initializeAvailabilityChecker() {
-    availabilityForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const zipCode = zipCodeInput.value.trim();
-        
-        if (!validateZipCode(zipCode)) {
-            showZipError('Please enter a valid 5-digit ZIP code');
-            return;
-        }
-        
-        clearZipError();
-        checkAvailability(zipCode);
-    });
-
-    zipCodeInput.addEventListener('input', function() {
-        this.value = this.value.replace(/\D/g, '').slice(0, 5);
-        clearZipError();
-    });
-}
-
-function validateZipCode(zipCode) {
-    return /^\d{5}$/.test(zipCode);
-}
-
-function showZipError(message) {
-    zipError.textContent = message;
-    zipError.style.display = 'block';
-    zipCodeInput.style.borderColor = '#EF4444';
-}
-
-function clearZipError() {
-    zipError.style.display = 'none';
-    zipCodeInput.style.borderColor = '#E2E8F0';
-}
-
-function checkAvailability(zipCode) {
-    // Simulate API call
-    const button = availabilityForm.querySelector('button');
-    const originalText = button.textContent;
-    
-    button.textContent = 'Checking...';
-    button.disabled = true;
-    
-    setTimeout(function() {
-        button.textContent = originalText;
-        button.disabled = false;
-        
-        // Show plans section
-        scrollToSection('plans');
-        
-        // Show success message
-        showNotification('Great news! High-speed internet is available in your area. Call +1 (866) 882-7480 to get started!', 'success');
-    }, 2000);
-}
-
-// Coverage Map Functions
-function initializeCoverageMap() {
-    coverageAreas.forEach(area => {
-        area.addEventListener('mouseenter', function(e) {
-            const state = this.dataset.state;
-            showMapTooltip(e, state);
-        });
-        
-        area.addEventListener('mouseleave', function() {
-            hideMapTooltip();
-        });
-        
-        area.addEventListener('click', function() {
-            const state = this.dataset.state;
-            showStateInfo(state);
-        });
-    });
-}
-
-function showMapTooltip(e, state) {
-    mapTooltip.textContent = `${state} - High-speed internet available`;
-    mapTooltip.style.left = e.pageX + 10 + 'px';
-    mapTooltip.style.top = e.pageY - 30 + 'px';
-    mapTooltip.classList.add('show');
-}
-
-function hideMapTooltip() {
-    mapTooltip.classList.remove('show');
-}
-
-function showStateInfo(state) {
-    showNotification(`${state} has excellent coverage with speeds up to 1 Gbps available! Call +1 (866) 882-7480 for details.`, 'info');
-}
-
-// Plan Comparison Functions
-function initializePlanComparison() {
-    // Plan type toggle functionality is handled by the onclick attribute in HTML
-}
-
-function togglePlanType(type) {
-    const toggleButtons = document.querySelectorAll('.toggle-btn');
-    
-    toggleButtons.forEach(btn => {
-        btn.classList.remove('active');
-    });
-    
-    event.target.classList.add('active');
-    
-    // Update plans based on type
-    updatePlansDisplay(type);
-}
-
-function updatePlansDisplay(type) {
-    const plans = plansGrid.querySelectorAll('.plan-card');
-    
-    plans.forEach(plan => {
-        plan.style.opacity = '0';
-        plan.style.transform = 'translateY(20px)';
-    });
-    
-    setTimeout(function() {
-        if (type === 'business') {
-            updateBusinessPlans();
-        } else {
-            updateResidentialPlans();
-        }
-        
-        plans.forEach((plan, index) => {
-            setTimeout(function() {
-                plan.style.opacity = '1';
-                plan.style.transform = 'translateY(0)';
-            }, index * 100);
-        });
-    }, 200);
-}
-
-function updateBusinessPlans() {
-    const planCards = plansGrid.querySelectorAll('.plan-card');
-    
-    // Update plan 1
-    planCards[0].querySelector('h3').textContent = 'Business Basic';
-    planCards[0].querySelector('.price').textContent = '$79.99';
-    planCards[0].querySelector('.plan-features ul').innerHTML = `
-        <li>Up to 200 Mbps</li>
-        <li>Static IP included</li>
-        <li>Business support</li>
-        <li>No data caps</li>
-        <li>99.9% uptime SLA</li>
-    `;
-    
-    // Update plan 2
-    planCards[1].querySelector('h3').textContent = 'Business Pro';
-    planCards[1].querySelector('.price').textContent = '$129.99';
-    planCards[1].querySelector('.plan-features ul').innerHTML = `
-        <li>Up to 500 Mbps</li>
-        <li>5 Static IPs</li>
-        <li>Priority support</li>
-        <li>No data caps</li>
-        <li>99.9% uptime SLA</li>
-        <li>Free installation</li>
-    `;
-    
-    // Update plan 3
-    planCards[2].querySelector('h3').textContent = 'Business Elite';
-    planCards[2].querySelector('.price').textContent = '$199.99';
-    planCards[2].querySelector('.plan-features ul').innerHTML = `
-        <li>Up to 1 Gbps</li>
-        <li>10 Static IPs</li>
-        <li>Dedicated support</li>
-        <li>No data caps</li>
-        <li>99.99% uptime SLA</li>
-        <li>Free installation</li>
-        <li>Security suite</li>
-    `;
-}
-
-function updateResidentialPlans() {
-    const planCards = plansGrid.querySelectorAll('.plan-card');
-    
-    // Update plan 1
-    planCards[0].querySelector('h3').textContent = 'Essential';
-    planCards[0].querySelector('.price').textContent = '$39.99';
-    planCards[0].querySelector('.plan-features ul').innerHTML = `
-        <li>Up to 100 Mbps</li>
-        <li>WiFi included</li>
-        <li>Basic support</li>
-        <li>No data caps</li>
-    `;
-    
-    // Update plan 2
-    planCards[1].querySelector('h3').textContent = 'Premium';
-    planCards[1].querySelector('.price').textContent = '$59.99';
-    planCards[1].querySelector('.plan-features ul').innerHTML = `
-        <li>Up to 500 Mbps</li>
-        <li>WiFi 6 included</li>
-        <li>Priority support</li>
-        <li>No data caps</li>
-        <li>Free installation</li>
-    `;
-    
-    // Update plan 3
-    planCards[2].querySelector('h3').textContent = 'Ultimate';
-    planCards[2].querySelector('.price').textContent = '$79.99';
-    planCards[2].querySelector('.plan-features ul').innerHTML = `
-        <li>Up to 1 Gbps</li>
-        <li>WiFi 6E included</li>
-        <li>24/7 premium support</li>
-        <li>No data caps</li>
-        <li>Free installation</li>
-        <li>Security suite</li>
-    `;
-}
-
 // FAQ Functions
 function initializeFAQ() {
     faqItems.forEach(item => {
@@ -284,95 +57,40 @@ function initializeFAQ() {
         const answer = item.querySelector('.faq-answer');
         
         question.addEventListener('click', function() {
-            const isOpen = this.getAttribute('aria-expanded') === 'true';
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
             
             // Close all other items
             faqItems.forEach(otherItem => {
-                if (otherItem !== item) {
-                    otherItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-                    otherItem.querySelector('.faq-answer').classList.remove('open');
-                }
+                const otherQuestion = otherItem.querySelector('.faq-question');
+                const otherAnswer = otherItem.querySelector('.faq-answer');
+                otherQuestion.setAttribute('aria-expanded', 'false');
+                otherAnswer.style.maxHeight = '0px';
             });
             
             // Toggle current item
-            this.setAttribute('aria-expanded', !isOpen);
-            answer.classList.toggle('open');
+            if (!isExpanded) {
+                this.setAttribute('aria-expanded', 'true');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            }
         });
     });
 }
 
+
 // Speed Test Functions
 function initializeSpeedTest() {
+    const speedTestButton = document.getElementById('startSpeedTest');
+    if (!speedTestButton) return;
+    
     speedTestButton.addEventListener('click', function() {
-        if (!isSpeedTesting) {
-            startSpeedTest();
-        }
+        startSpeedTest();
     });
 }
 
 function startSpeedTest() {
-    if (isSpeedTesting) return;
-    
-    isSpeedTesting = true;
-    speedTestButton.textContent = 'Testing...';
-    speedTestButton.disabled = true;
-    
-    // Reset values
-    speedValue.textContent = '0';
-    downloadSpeed.textContent = '--';
-    uploadSpeed.textContent = '--';
-    pingSpeed.textContent = '--';
-    
-    // Simulate speed test
-    let progress = 0;
-    const testInterval = setInterval(function() {
-        progress += Math.random() * 20;
-        
-        if (progress >= 100) {
-            progress = 100;
-            clearInterval(testInterval);
-            completeSpeedTest();
-        }
-        
-        const speed = Math.floor(progress * 2.5); // Max 250 Mbps
-        speedValue.textContent = speed;
-        updateSpeedGauge(speed);
-    }, 100);
+    showNotification('Speed test feature unavailable. For connectivity assistance, please call +1 (866) 882-7480.', 'info');
 }
 
-function completeSpeedTest() {
-    const finalDownload = Math.floor(Math.random() * 200) + 50; // 50-250 Mbps
-    const finalUpload = Math.floor(Math.random() * 50) + 10; // 10-60 Mbps
-    const finalPing = Math.floor(Math.random() * 30) + 5; // 5-35 ms
-    
-    downloadSpeed.textContent = finalDownload + ' Mbps';
-    uploadSpeed.textContent = finalUpload + ' Mbps';
-    pingSpeed.textContent = finalPing + ' ms';
-    
-    speedTestButton.textContent = 'Test Again';
-    speedTestButton.disabled = false;
-    isSpeedTesting = false;
-    
-    // Show recommendation
-    let recommendation = '';
-    if (finalDownload >= 100) {
-        recommendation = 'Excellent! Your speed is great for streaming, gaming, and working from home.';
-    } else if (finalDownload >= 50) {
-        recommendation = 'Good speed for most activities. Consider upgrading for better performance. Call +1 (866) 882-7480!';
-    } else {
-        recommendation = 'Your speed could be improved. Check our high-speed plans! Call +1 (866) 882-7480 now!';
-    }
-    
-    showNotification(recommendation, 'info');
-}
-
-function updateSpeedGauge(speed) {
-    const percentage = Math.min(speed / 250, 1);
-    const degrees = percentage * 180;
-    
-    const gauge = document.querySelector('.speed-gauge');
-    gauge.style.background = `conic-gradient(from 0deg, #6366F1 ${degrees}deg, #F1F5F9 ${degrees}deg)`;
-}
 
 // Testimonials Functions
 function initializeTestimonials() {
@@ -416,10 +134,6 @@ function validateContactForm(data) {
     
     if (!data.email.trim() || !isValidEmail(data.email)) {
         errors.push('Valid email is required');
-    }
-    
-    if (!data.zip.trim() || !validateZipCode(data.zip)) {
-        errors.push('Valid ZIP code is required');
     }
     
     if (!data.message.trim()) {
@@ -672,6 +386,5 @@ window.addEventListener('beforeunload', function() {
 
 // Global functions for HTML onclick handlers
 window.scrollToSection = scrollToSection;
-window.togglePlanType = togglePlanType;
 window.toggleChat = toggleChat;
 window.sendMessage = sendMessage;
