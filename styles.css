@@ -254,11 +254,12 @@ h3 {
 /* Hero Section */
 .hero {
     position: relative;
-    height: 100vh;
+    min-height: 100vh;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 100px 0 60px;
 }
 
 .hero-background {
@@ -286,7 +287,7 @@ h3 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(26, 26, 26, 0.8), rgba(99, 102, 241, 0.3));
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.85), rgba(99, 102, 241, 0.4));
     z-index: 2;
 }
 
@@ -368,22 +369,65 @@ h3 {
 .hero-content {
     position: relative;
     z-index: 3;
-    text-align: center;
     color: #FFFFFF;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 2rem;
+    width: 100%;
+}
+
+.hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 4rem;
+    align-items: center;
+}
+
+.hero-main {
+    animation: fadeInLeft 1s ease-out;
+}
+
+.hero-sidebar {
+    animation: fadeInRight 1s ease-out 0.3s both;
+}
+
+.independence-banner {
+    background: rgba(99, 102, 241, 0.15);
+    border: 2px solid #6366F1;
+    border-radius: 50px;
+    padding: 12px 24px;
+    margin-bottom: 24px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #A5B4FC;
+    backdrop-filter: blur(10px);
+}
+
+.hero-badge {
+    display: inline-block;
+    background: rgba(139, 92, 246, 0.2);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #C4B5FD;
+    margin-bottom: 20px;
+    animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+.hero-text {
+    text-align: left;
 }
 
 .hero-title {
-    font-size: 4rem;
+    font-size: 3.5rem;
     margin-bottom: 1.5rem;
     line-height: 1.1;
 }
 
 .title-line {
     display: block;
-    animation: fadeInUp 1s ease-out;
+    animation: fadeInUp 1s ease-out 0.4s both;
 }
 
 .title-line.highlight {
@@ -391,26 +435,74 @@ h3 {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: fadeInUp 1s ease-out 0.3s both;
-}
-
-.hero-subtitle {
-    font-size: 1.4rem;
-    margin-bottom: 2rem;
-    opacity: 0.9;
     animation: fadeInUp 1s ease-out 0.6s both;
 }
 
-.hero-stats {
+.hero-subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    line-height: 1.6;
+    color: #E2E8F0;
+    animation: fadeInUp 1s ease-out 0.8s both;
+}
+
+.hero-features {
     display: flex;
-    justify-content: center;
-    gap: 3rem;
-    margin-bottom: 3rem;
-    animation: fadeInUp 1s ease-out 0.9s both;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+    animation: fadeInUp 1s ease-out 1s both;
+}
+
+.hero-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #CBD5E1;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.hero-feature-item svg {
+    color: #6366F1;
+    flex-shrink: 0;
+}
+
+.hero-stats-card {
+    background: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.hero-stats-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.hero-stats {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
 }
 
 .stat-item {
     text-align: center;
+    padding: 1rem;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    background: rgba(99, 102, 241, 0.2);
+    transform: translateY(-2px);
 }
 
 .stat-number {
@@ -419,6 +511,7 @@ h3 {
     font-weight: 700;
     color: #6366F1;
     font-family: 'Poppins', sans-serif;
+    margin-bottom: 0.5rem;
 }
 
 .stat-label {
@@ -426,13 +519,33 @@ h3 {
     opacity: 0.8;
     text-transform: uppercase;
     letter-spacing: 1px;
+    color: #CBD5E1;
+}
+
+.stats-card-footer {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.stats-card-footer p {
+    margin: 0;
+    color: #94A3B8;
+    font-size: 0.9rem;
 }
 
 .hero-actions {
     display: flex;
-    gap: 1.5rem;
-    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
     animation: fadeInUp 1s ease-out 1.2s both;
+}
+
+.hero-disclaimer {
+    font-size: 13px;
+    color: #94A3B8;
+    margin: 0;
+    animation: fadeInUp 1s ease-out 1.4s both;
 }
 
 .hero-scroll-indicator {
@@ -1695,6 +1808,28 @@ section {
     50% { transform: scale(1.05); }
 }
 
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 /* AOS Animation Styles */
 [data-aos] {
     opacity: 0;
@@ -1732,7 +1867,17 @@ section {
 /* Responsive Design */
 @media (max-width: 1024px) {
     .container {
-        padding: 0 1rem;
+        padding: 0 1.5rem;
+    }
+    
+    .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .hero-sidebar {
+        max-width: 500px;
+        margin: 0 auto;
     }
     
     .hero-title {
@@ -1740,7 +1885,12 @@ section {
     }
     
     .hero-stats {
-        gap: 2rem;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+    
+    .stat-item {
+        padding: 0.75rem;
     }
     
     .about-content {
@@ -1760,6 +1910,11 @@ section {
     .deals-carousel {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+    }
+    
+    .what-we-do-content {
+        grid-template-columns: 1fr !important;
+        gap: 30px !important;
     }
 }
 
@@ -1797,8 +1952,45 @@ section {
         font-size: 1.5rem;
     }
     
+    .hero {
+        padding: 80px 0 40px;
+        min-height: auto;
+    }
+    
+    .hero-inner {
+        gap: 2rem;
+    }
+    
+    .hero-text {
+        text-align: center;
+    }
+    
     .hero-title {
         font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .hero-badge {
+        font-size: 13px;
+        padding: 6px 14px;
+    }
+    
+    .independence-banner {
+        font-size: 12px;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    
+    .hero-features {
+        justify-content: center;
+        gap: 1.5rem;
+    }
+    
+    .hero-feature-item {
+        font-size: 0.85rem;
     }
     
     .hero-actions {
@@ -1807,9 +1999,19 @@ section {
         gap: 1rem;
     }
     
+    .hero-actions .btn-primary,
+    .hero-actions .btn-outline {
+        width: 100%;
+        max-width: 300px;
+    }
+    
     .hero-stats {
-        flex-direction: column;
+        grid-template-columns: 1fr;
         gap: 1rem;
+    }
+    
+    .hero-stats-card {
+        padding: 2rem;
     }
     
     .availability-form {
@@ -1866,19 +2068,74 @@ section {
     .section-header {
         margin-bottom: 3rem;
     }
+    
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    h2 {
+        font-size: 2rem;
+    }
+    
+    h3 {
+        font-size: 1.5rem;
+    }
 }
 
 @media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
     .hero-title {
         font-size: 2rem;
     }
     
     .hero-subtitle {
-        font-size: 1.1rem;
+        font-size: 1rem;
+    }
+    
+    .hero-badge {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+    
+    .independence-banner {
+        font-size: 11px;
+        padding: 8px 16px;
+        display: block;
+        text-align: center;
+    }
+    
+    .independence-banner svg {
+        display: block;
+        margin: 0 auto 4px;
+    }
+    
+    .hero-features {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+    
+    .hero-feature-item {
+        font-size: 0.8rem;
+    }
+    
+    .hero-stats-card {
+        padding: 1.5rem;
+    }
+    
+    .hero-stats-card h3 {
+        font-size: 1.25rem;
     }
     
     .section-title {
-        font-size: 2rem;
+        font-size: 1.75rem;
+    }
+    
+    .section-subtitle {
+        font-size: 1rem;
     }
     
     .btn-primary,
@@ -1888,10 +2145,15 @@ section {
         min-width: 140px;
     }
     
+    .btn-primary svg,
+    .btn-outline svg {
+        display: none;
+    }
+    
     .plan-card,
     .service-card,
     .benefit-card {
-        padding: 2rem;
+        padding: 1.5rem;
     }
     
     .chat-window {
@@ -1910,6 +2172,84 @@ section {
     
     .price {
         font-size: 2.5rem;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.75rem;
+    }
+    
+    h3 {
+        font-size: 1.25rem;
+    }
+}
+
+/* Intermediate breakpoint for small tablets */
+@media (min-width: 481px) and (max-width: 767px) {
+    .hero-inner {
+        gap: 2.5rem;
+    }
+    
+    .hero-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+    
+    .hero-features {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+}
+
+/* Large tablets and small desktops */
+@media (min-width: 769px) and (max-width: 1023px) {
+    .hero-inner {
+        grid-template-columns: 1fr 350px;
+        gap: 3rem;
+    }
+    
+    .hero-title {
+        font-size: 2.75rem;
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .what-we-do-content {
+        gap: 30px !important;
+    }
+}
+
+/* Extra responsive utilities */
+@media (max-width: 640px) {
+    .hero-actions .btn-primary,
+    .hero-actions .btn-outline {
+        font-size: 0.95rem;
+        padding: 14px 20px;
+    }
+    
+    .independence-banner {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .independence-banner svg {
+        margin-right: 0;
     }
 }
 
